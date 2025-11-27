@@ -4,11 +4,13 @@
 @section('page-title', 'PRODUCTS')
 
 @section('content')
-<div class="mb-3">
-    <a href="{{ route('products.create') }}" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Add Product
-    </a>
-</div>
+@if (Auth::user()->role === 'admin')
+    <div class="mb-3">
+        <a href="{{ route('products.create') }}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add Product
+        </a>
+    </div>
+@endif
 
 <div class="card">
     <div class="card-header">
@@ -47,7 +49,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">No products found. <a href="{{ route('products.create') }}">Add one now</a></td>
+                    <td colspan="7" class="text-center">No products found. @if (Auth::user()->role === 'admin') <a href="{{ route('products.create') }}">Add one now</a> @endif </td>
                 </tr>
                 @endforelse
             </tbody>

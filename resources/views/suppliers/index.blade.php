@@ -4,11 +4,13 @@
 @section('page-title', 'SUPPLIERS')
 
 @section('content')
-<div class="mb-3">
-    <a href="{{ route('suppliers.create') }}" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Add Supplier
-    </a>
-</div>
+@if (Auth::user()->role === 'admin')
+    <div class="mb-3">
+        <a href="{{ route('suppliers.create') }}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add Supplier
+        </a>
+    </div>
+@endif
 
 <div class="card">
     <div class="card-header">
@@ -48,7 +50,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center">No suppliers found. <a href="{{ route('suppliers.create') }}">Add one now</a></td>
+                    <td colspan="6" class="text-center">No suppliers found. @if (Auth::user()->role === 'admin') <a href="{{ route('suppliers.create') }}">Add one now</a> @endif </td>
                 </tr>
                 @endforelse
             </tbody>

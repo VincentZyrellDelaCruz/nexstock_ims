@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -10,14 +11,20 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->get();
-        return view('products.index', compact('products'));
+        if (Auth::check()) {
+            $products = Product::with('category')->get();
+            return view('products.index', compact('products'));
+        }
+        return redirect('/login');
     }
 
     public function create()
     {
-        $categories = Category::all();
-        return view('products.create', compact('categories'));
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            $categories = Category::all();
+            return view('products.create', compact('categories'));
+        }
+        return redirect('/dashboard');
     }
 
     public function store(Request $request)
@@ -37,8 +44,11 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        return view('products.edit', compact('product', 'categories'));
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            $categories = Category::all();
+            return view('products.edit', compact('product', 'categories'));
+        }
+        return redirect('/dashboard');
     }
 
     public function update(Request $request, Product $product)

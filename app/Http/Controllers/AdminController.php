@@ -4,19 +4,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::all();
-        return view('admin.index', compact('users'));
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            $users = User::all();
+            return view('admin.index', compact('users'));
+        }
+        return redirect('/dashboard');
     }
 
     public function create()
-    {
-        return view('admin.create');
+    {   if (Auth::check() && Auth::user()->role === 'admin') {
+            return view('admin.create');
+        }
+        return redirect('/dashboard');
     }
 
     public function store(Request $request)
@@ -40,7 +46,10 @@ class AdminController extends Controller
 
     public function edit(User $user)
     {
-        return view('admin.edit', compact('user'));
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return view('admin.edit', compact('user'));
+        }
+        return redirect('/dashboard');
     }
 
     public function update(Request $request, User $user)
