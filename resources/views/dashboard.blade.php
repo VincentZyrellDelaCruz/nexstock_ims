@@ -38,6 +38,7 @@
                 <h5>Top Selling Products</h5>
             </div>
             <div class="card-body">
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -69,6 +70,7 @@
                 <h5>Recent Orders</h5>
             </div>
             <div class="card-body">
+                </div>
                 <table class="table">
                     <thead>
                         <tr>

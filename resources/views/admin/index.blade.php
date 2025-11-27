@@ -4,15 +4,18 @@
 @section('page-title', 'ADMIN SETTINGS')
 
 @section('content')
-<div class="mb-3">
-    <a href="{{ route('admin.users.create') }}" class="btn btn-success">
-        <i class="bi bi-plus-circle"></i> Add User
-    </a>
-</div>
+@if (Auth::check() && Auth::user()->role === 'admin')
+    <div class="mb-3">
+        <a href="{{ route('admin.users.create') }}" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add User
+        </a>
+    </div>
+@endif
 
 <div class="card">
     <div class="card-header">
         <h5>Users Management</h5>
+        @include('components._table_search', ['placeholder' => 'Search users...'])
     </div>
     <div class="card-body">
         <table class="table">

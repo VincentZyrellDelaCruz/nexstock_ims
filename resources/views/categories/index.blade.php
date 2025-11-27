@@ -15,6 +15,7 @@
 <div class="card">
     <div class="card-header">
         <h5>Categories List</h5>
+        @include('components._table_search', ['placeholder' => 'Search categories...'])
     </div>
     <div class="card-body">
         <table class="table">

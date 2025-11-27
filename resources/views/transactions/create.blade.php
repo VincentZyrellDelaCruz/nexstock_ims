@@ -38,7 +38,9 @@
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" required>
-                    <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                    @endif
                     <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                     <option value="cancelled" {{ old('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                 </select>

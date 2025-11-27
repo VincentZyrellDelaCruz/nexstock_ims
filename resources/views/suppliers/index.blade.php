@@ -15,9 +15,7 @@
 <div class="card">
     <div class="card-header">
         <h5>Suppliers List</h5>
-        <div class="mt-2">
-            <input type="text" class="form-control" id="search" placeholder="Search suppliers...">
-        </div>
+            @include('components._table_search', ['placeholder' => 'Search suppliers...'])
     </div>
     <div class="card-body">
         <table class="table">
