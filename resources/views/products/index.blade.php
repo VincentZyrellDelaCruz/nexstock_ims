@@ -24,7 +24,7 @@
                     <th>Product ID</th>
                     <th>Product Name</th>
                     <th>Category</th>
-                    <th>Quantity</th>
+                    <th>SKU</th>
                     <th>Price</th>
                     <th>Status</th>
                     <th>Actions</th>
@@ -36,7 +36,7 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name ?? 'N/A' }}</td>
-                    <td>{{ $product->quantity }}</td>
+                    <td>{{ $product->sku }}</td>
                     <td>${{ number_format($product->price, 2) }}</td>
                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'danger' }}">{{ ucfirst($product->status) }}</span></td>
                     <td>
