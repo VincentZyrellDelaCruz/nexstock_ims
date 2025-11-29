@@ -22,7 +22,8 @@ class DashboardController extends Controller
                 ->whereDate('created_at', today())
                 ->count();
             $pendingOrders = Transaction::where('status', 'pending')->count();
-
+            $lowStockProducts = Inventory::where('status', 'low_stock')->count();
+            $outOfStockProducts = Inventory::where('status', 'out_of_stock')->count();
             $topProducts = Inventory::orderBy('quantity', 'desc')->take(5)->get();
             $recentOrders = Transaction::with('product')->latest()->take(5)->get();
 
@@ -32,7 +33,9 @@ class DashboardController extends Controller
                 'newOrders',
                 'pendingOrders',
                 'topProducts',
-                'recentOrders'
+                'recentOrders',
+                'lowStockProducts',
+                'outOfStockProducts'
             ));
         }
         return redirect('/login');

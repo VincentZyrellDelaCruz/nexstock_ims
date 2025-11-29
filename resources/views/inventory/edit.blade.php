@@ -25,14 +25,6 @@
                 <label for="quantity" class="form-label">Quantity</label>
                 <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity', $inventory->quantity) }}" min="0" required>
             </div>
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select class="form-select" id="status" name="status" required>
-                    <option value="in_stock" {{ old('status', $inventory->status) == 'in_stock' ? 'selected' : '' }}>In Stock</option>
-                    <option value="low_stock" {{ old('status', $inventory->status) == 'low_stock' ? 'selected' : '' }}>Low Stock</option>
-                    <option value="out_of_stock" {{ old('status', $inventory->status) == 'out_of_stock' ? 'selected' : '' }}>Out of Stock</option>
-                </select>
-            </div>
             <button type="submit" class="btn btn-success">Save</button>
             <a href="{{ route('inventory.index') }}" class="btn btn-danger">Cancel</a>
         </form>

@@ -26,7 +26,7 @@
                     <th>Contact Person</th>
                     <th>Email</th>
                     <th>Phone</th>
-                    <th>Actions</th>
+                    @if (Auth::check() && Auth::user()->role === 'admin') <th>Actions</th> @endif
                 </tr>
             </thead>
             <tbody>
@@ -37,14 +37,16 @@
                     <td>{{ $supplier->contact_person }}</td>
                     <td>{{ $supplier->email }}</td>
                     <td>{{ $supplier->phone }}</td>
-                    <td>
-                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-success btn-sm">Edit</a>
-                        <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this supplier?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <td>
+                            <a href="{{ route('suppliers.edit', $supplier->id) }}" class="btn btn-success btn-sm">Edit</a>
+                            <form action="{{ route('suppliers.destroy', $supplier->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this supplier?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
                 @empty
                 <tr>

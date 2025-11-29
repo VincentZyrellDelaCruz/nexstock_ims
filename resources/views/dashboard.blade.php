@@ -19,18 +19,17 @@
     </div>
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
-            <p>New Orders</p>
-            <h3>{{ $newOrders ?? 0 }}</h3>
+            <p>Low Stock Items</p>
+            <h3>{{ $lowStockProducts ?? 0 }}</h3>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
-            <p>Pending Orders</p>
-            <h3>{{ $pendingOrders ?? 0 }}</h3>
+            <p>Out of Stock</p>
+            <h3>{{ $outOfStockProducts ?? 0 }}</h3>
         </div>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-6 mb-4">
         <div class="card">
@@ -38,7 +37,6 @@
                 <h5>Top Selling Products</h5>
             </div>
             <div class="card-body">
-                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -64,13 +62,13 @@
             </div>
         </div>
     </div>
+
     <div class="col-md-6 mb-4">
         <div class="card">
             <div class="card-header">
-                <h5>Recent Orders</h5>
+                <h5>Recent Transactions</h5>
             </div>
             <div class="card-body">
-                </div>
                 <table class="table">
                     <thead>
                         <tr>

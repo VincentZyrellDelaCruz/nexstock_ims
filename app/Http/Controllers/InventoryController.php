@@ -29,10 +29,13 @@ class InventoryController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:0',
-            'status' => 'required|string',
         ]);
 
-        Inventory::create($request->all());
+        Inventory::create([
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
+        ]);
         return redirect()->route('inventory.index')->with('success', 'Inventory item added successfully!');
     }
 
@@ -49,11 +52,15 @@ class InventoryController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:0',
-            'status' => 'required|string',
+            'quantity' => 'required|integer|min:0'
         ]);
 
-        $inventory->update($request->all());
+        $inventory->update([
+            'product_id' => $request->product_id,
+            'quantity' => $request->quantity,
+            'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
+        ]);
+        
         return redirect()->route('inventory.index')->with('success', 'Inventory item updated successfully!');
     }
 

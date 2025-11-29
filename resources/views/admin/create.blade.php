@@ -12,7 +12,7 @@
         <form action="{{ route('admin.users.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="name" class="form-label">Username / Name</label>
+                <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
             </div>
             <div class="mb-3">
