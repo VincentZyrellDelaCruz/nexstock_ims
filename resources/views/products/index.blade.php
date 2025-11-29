@@ -37,7 +37,7 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name ?? 'N/A' }}</td>
                     <td>{{ $product->sku }}</td>
-                    <td>${{ number_format($product->price, 2) }}</td>
+                    <td>₱{{ number_format($product->price, 2) }}</td>
                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'danger' }}">{{ ucfirst($product->status) }}</span></td>
                     <td>
                         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">Edit</a>

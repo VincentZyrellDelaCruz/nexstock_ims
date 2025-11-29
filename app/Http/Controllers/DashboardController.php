@@ -23,7 +23,7 @@ class DashboardController extends Controller
                 ->count();
             $pendingOrders = Transaction::where('status', 'pending')->count();
 
-            $topProducts = Product::orderBy('quantity', 'desc')->take(5)->get();
+            $topProducts = Inventory::orderBy('quantity', 'desc')->take(5)->get();
             $recentOrders = Transaction::with('product')->latest()->take(5)->get();
 
             return view('dashboard', compact(

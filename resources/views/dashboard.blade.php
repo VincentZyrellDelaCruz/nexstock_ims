@@ -14,7 +14,7 @@
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
             <p>Total Revenue</p>
-            <h3>${{ number_format($totalRevenue ?? 0, 2) }}</h3>
+            <h3>₱{{ number_format($totalRevenue ?? 0, 2) }}</h3>
         </div>
     </div>
     <div class="col-md-3 mb-4">

@@ -34,7 +34,10 @@
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ old('price') }}" min="0" required>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-success-subtle">₱</span>
+                    <input type="number" step="0.01" class="form-control" id="price" name="price" value="{{ old('price') }}" min="0" required>
+                </div>
             </div>
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
