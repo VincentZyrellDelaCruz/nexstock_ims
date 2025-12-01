@@ -1,0 +1,58 @@
+@extends('layouts.app')
+
+@section('title', 'Products - NexStack')
+@section('page-title', 'PRODUCTS')
+
+@section('content')
+<div class="mb-3">
+    <a href="{{ route('products.create') }}" class="btn btn-success">
+        <i class="bi bi-plus-circle"></i> Add Product
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5>Products List</h5>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Category</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse($products as $product)
+                <tr>
+                    <td>{{ $product->id }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->category->name ?? 'N/A' }}</td>
+                    <td>{{ $product->quantity }}</td>
+                    <td>${{ number_format($product->price, 2) }}</td>
+                    <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'danger' }}">{{ ucfirst($product->status) }}</span></td>
+                    <td>
+                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">Edit</a>
+                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="7" class="text-center">No products found.</td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection
+
