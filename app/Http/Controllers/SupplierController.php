@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Supplier;
 
 class SupplierController extends Controller
 {
     public function index()
     {
-        $suppliers = Supplier::all();
-        return view('suppliers.index', compact('suppliers'));
+        if (Auth::check()) {
+            $suppliers = Supplier::all();
+            return view('suppliers.index', compact('suppliers'));
+        }
+        return redirect('/login');
     }
 
     public function create()
     {
-        return view('suppliers.create');
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return view('suppliers.create');
+        }
+        return redirect('/dashboard');
     }
 
     public function store(Request $request)
@@ -34,7 +41,10 @@ class SupplierController extends Controller
 
     public function edit(Supplier $supplier)
     {
-        return view('suppliers.edit', compact('supplier'));
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            return view('suppliers.edit', compact('supplier'));
+        }
+        return redirect('/dashboard');
     }
 
     public function update(Request $request, Supplier $supplier)

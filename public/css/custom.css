@@ -52,20 +52,25 @@ body {
     padding: 0 20px 30px;
     border-bottom: 1px solid var(--medium-green);
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
 .logo {
     color: var(--white);
-    font-size: 24px;
+    font-size: 50px;
     font-weight: bold;
     margin: 0;
 }
 
-/* image-based logo (when using an <img> tag) */
-.site-logo {
-    display: block;
-    width: 160px;
+/* Target only the logo in the sidebar */
+.sidebar-header .site-logo {
+    max-width: 162px; /* Maximum width */
+    max-height: 162px; /* Maximum height */
+    width: auto;
     height: auto;
+    object-fit: contain;
 }
 
 .nav-menu {
@@ -74,7 +79,7 @@ body {
 }
 
 .nav-item {
-    margin: 5px 0;
+    margin: 20px 0;
 }
 
 .nav-link {
@@ -97,7 +102,7 @@ body {
 }
 
 .nav-item.active .nav-link {
-    background-color: var(--light-green);
+    background-color: var(--accent-green);
     color: var(--dark-green);
     font-weight: bold;
 }
@@ -775,15 +780,15 @@ a:hover {
     height: 60px; /* Fixed height */
 }
 
-.site-logo {
-    height: 100px; /* Reduced logo size */
+.landing-header .site-logo {
+    height: 20px; /* Reduced logo size */
     width: auto;
     max-height: 40px; /* Maximum height constraint */
 }
 
 .landing-nav {
     display: flex;
-    gap: 1rem; /* Reduced gap */
+    gap: 0.75rem; /* Reduced gap */
     align-items: center;
 }
 

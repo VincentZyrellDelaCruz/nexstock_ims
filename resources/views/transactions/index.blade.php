@@ -13,6 +13,7 @@
 <div class="card">
     <div class="card-header">
         <h5>Transactions List</h5>
+        @include('components._table_search', ['placeholder' => 'Search transactions...'])
     </div>
     <div class="card-body">
         <table class="table">
@@ -47,7 +48,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="7" class="text-center">No transactions found.</td>
+                    <td colspan="7" class="text-center">No transactions found. <a href="{{ route('transactions.create') }}">Add one now</a></td>
                 </tr>
                 @endforelse
             </tbody>

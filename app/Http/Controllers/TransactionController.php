@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use App\Models\Product;
 
@@ -22,12 +23,17 @@ class TransactionController extends Controller
 
     public function store(Request $request)
     {
+        $statusRule = 'required|in:pending,cancelled';
+        if (Auth::check() && Auth::user()->role === 'admin') {
+            $statusRule = 'required|in:completed,pending,cancelled';
+        }
+
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
             'type' => 'required|in:in,out',
             'date' => 'required|date',
-            'status' => 'required|string',
+            'status' => $statusRule,
         ]);
 
         Transaction::create($request->all());

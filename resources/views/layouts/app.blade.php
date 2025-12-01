@@ -76,12 +76,14 @@
                         <span>Reports</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
-                    <a href="{{ route('admin.index') }}" class="nav-link">
-                        <i class="bi bi-gear"></i>
-                        <span>Admin Settings</span>
-                    </a>
-                </li>
+                @if (Auth::user()->role === 'admin')
+                    <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
+                        <a href="{{ route('admin.index') }}" class="nav-link">
+                            <i class="bi bi-gear"></i>
+                            <span>Admin Settings</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </nav>
 

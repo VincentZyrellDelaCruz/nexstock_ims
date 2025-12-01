@@ -1,97 +1,93 @@
-# Laragon (Windows) — Quick install & setup (PowerShell)
+# NexStack - Inventory Management System
 
-This guide contains the Laragon-specific steps for getting this Laravel project running on Windows using PowerShell.
+A comprehensive inventory management system built with Laravel, PHP, HTML, CSS, and Bootstrap.
 
-Follow these steps from your project root (adjust paths if needed):
+## Features
 
-1) Start Laragon services
-- Open Laragon and click "Start All" to run Apache/Nginx and MySQL.
+- **Dashboard**: Overview with KPIs, top selling products, and recent orders
+- **Inventory Management**: Track and manage inventory items
+- **Product Management**: Add, edit, and delete products
+- **Category Management**: Organize products by categories
+- **Supplier Management**: Manage supplier information
+- **Transaction Management**: Track incoming and outgoing transactions
+- **Reports**: Generate sales, inventory, and supplier reports
+- **Admin Settings**: User management and system administration
+- **Authentication**: User login and registration system
 
-2) Open Laragon's terminal (recommended)
-- In the Laragon application click the Terminal button or use the Menu -> Terminal option to open the integrated terminal. This opens a terminal already configured for Laragon and helps access the bundled MySQL client and PHP executables without changing system PATH.
+## Technology Stack
 
-Note: the terminal opens at Laragon's root. Use the same shell window for all commands below.
+- Laravel 10
+- PHP 8.0+
+- HTML5
+- CSS3 (Custom styling with Bootstrap 5)
+- Bootstrap 5.3
+- MySQL Database
 
-2) Prepare environment
-```powershell
-cd 'C:\Users\cedri\JCV\School\Applications\laragon\www\SAD'
-copy .env.example .env -ErrorAction SilentlyContinue
-notepad .env
-```
-Update `.env` with Laragon-friendly DB values (example):
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nexstock_db
-DB_USERNAME=root
-DB_PASSWORD=
-SESSION_DRIVER=database
-```
+## Installation
 
-3) Create the database (using Laragon terminal)
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
 
-If you don't already have the database listed in `.env` create it using Laragon's built-in MySQL client. Laragon defaults to `root` with an empty password unless you've changed it.
+3. Copy the environment file:
+   ```bash
+   cp .env.example .env
+   ```
 
-From Laragon's Terminal (replace nexstock_db with the DB name in your `.env`):
+4. Generate application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-```powershell
-cd 'C:\Users\cedri\JCV\School\Applications\laragon\www\SAD'
-# You can run the MySQL client shipped with Laragon like this:
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS nexstock_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-```
+5. Configure your database in `.env` file:
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nexstock_db
+   DB_USERNAME=root
+   DB_PASSWORD=your_password
+   ```
 
-If your MySQL root user has a password, append -p and enter it when prompted:
+6. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
 
-```powershell
-mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS nexstock_db ...;"
-```
+7. Start the development server:
+   ```bash
+   php artisan serve
+   ```
 
-Alternatively you can create the database with a GUI: Laragon -> Menu -> MySQL -> phpMyAdmin or HeidiSQL.
-Or use Laragon -> Menu -> MySQL -> phpMyAdmin / HeidiSQL.
+8. Open your browser and navigate to `http://localhost:8000`
 
-4) Run migrations (creates `sessions` table and others)
-```powershell
-php artisan migrate:status
-php artisan migrate
-```
-If you don't have a session migration present for any reason, generate it and run:
-```powershell
-php artisan session:table
-php artisan migrate
-```
+## Project Structure
 
-5) Clear caches & ensure storage
-```powershell
-php artisan config:clear
-php artisan cache:clear
-php artisan route:clear
-php artisan optimize:clear
+- `app/Http/Controllers/` - All controllers
+- `app/Models/` - Eloquent models
+- `database/migrations/` - Database migrations
+- `resources/views/` - Blade templates
+- `public/css/` - Custom CSS files
+- `routes/web.php` - Web routes
 
-mkdir .\storage\framework\sessions -ErrorAction SilentlyContinue
-mkdir .\bootstrap\cache -ErrorAction SilentlyContinue
-```
+## Color Scheme
 
-6) Validate & run
+- Dark Green (#1a4d2e) - Primary background
+- Light Green (#90EE90) - Accents and highlights
+- Medium Green (#2d7a3f) - Secondary elements
+- White (#ffffff) - Text and cards
 
-- Visit the app in your browser (e.g. http://sad.test or as configured in Laragon) — the SQL error referencing `sessions` should be resolved after successful migration.
+## Default User
 
-- Confirm the `sessions` table exists using the Laragon terminal or a GUI:
+After running migrations, you can create a user through the registration page or create one manually in the database.
 
-Laragon terminal / MySQL CLI:
-```powershell
-mysql -u root -e "USE nexstock_db; SHOW TABLES LIKE 'sessions';"
-```
+## License
 
-In phpMyAdmin/HeidiSQL (Laragon Menu -> MySQL -> phpMyAdmin / HeidiSQL) look for `sessions` under your database.
+MIT License
 
-Quick local alternative (no DB sessions):
-- Edit `.env` and set `SESSION_DRIVER=file`, then run `php artisan config:clear` and ensure `storage/framework/sessions` exists. This avoids needing the sessions table during development.
+## Support
 
-Troubleshooting quick checklist (Laragon Terminal)
-- If you see "Access denied" when connecting to MySQL, check whether the user/password in `.env` matches a real MySQL user and port (default port 3306). Connect with `mysql -u your_user -p` to verify credentials.
-- If migrations say they're already run but tables are missing, confirm you're using the correct database name in `.env` and that `php artisan migrate:status` shows which migrations ran.
-- If `php` or `mysql` commands aren't found in Laragon Terminal, open Laragon's main window and ensure you've started services and used the Laragon terminal button/menu (it auto-configures PATH). If you're in Windows PowerShell outside Laragon, prepend the PHP path or run commands from Laragon's terminal instead.
-
-If you'd like, I can add troubleshooting notes for common Laragon/MySQL issues or run the migration steps with you interactively.
+For support, please contact the development team.
 
