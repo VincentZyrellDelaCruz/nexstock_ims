@@ -70,17 +70,26 @@
                         <span>Transactions</span>
                     </a>
                 </li>
+
+                @if (Auth::user()->role === 'admin')
                 <li class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
                     <a href="{{ route('reports.index') }}" class="nav-link">
                         <i class="bi bi-file-earmark-text"></i>
                         <span>Reports</span>
                     </a>
                 </li>
-                @if (Auth::user()->role === 'admin')
                     <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
                         <a href="{{ route('admin.index') }}" class="nav-link">
                             <i class="bi bi-gear"></i>
-                            <span>Admin Settings</span>
+                            <span>Admin Panel</span>
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role === 'staff')
+                    <li class="nav-item {{ request()->routeIs('defects.*') ? 'active' : '' }}">
+                        <a href="{{ route('defects.index') }}" class="nav-link">
+                            <i class="bi bi-ui-checks"></i>
+                            <span>Quality Control</span>
                         </a>
                     </li>
                 @endif
