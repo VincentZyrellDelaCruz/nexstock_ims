@@ -208,7 +208,7 @@ body {
 
 .form-label {
     font-weight: 800;
-    color: var(--light-green);
+    color: var(--dark-green);
     margin-bottom: 0.4rem;
     font-size: 0.9rem;
     letter-spacing: 0.2px;

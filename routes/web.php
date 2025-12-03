@@ -11,6 +11,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\QualityController;
+use App\Http\Controllers\WarehouseController;
 use Illuminate\Support\Facades\Route;
 
 // Landing and Public Pages
@@ -61,5 +62,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Quality Control (Defect) Routes
     Route::resource('/defects', QualityController::class);
+
+    // Warehouse Routes
+    Route::resource('warehouses', WarehouseController::class);
 });
 

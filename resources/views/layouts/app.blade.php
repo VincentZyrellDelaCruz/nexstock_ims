@@ -78,18 +78,30 @@
                         <span>Reports</span>
                     </a>
                 </li>
-                    <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.index') }}" class="nav-link">
-                            <i class="bi bi-gear"></i>
-                            <span>Admin Panel</span>
-                        </a>
-                    </li>
+                <li class="nav-item {{ request()->routeIs('warehouses.*') ? 'active' : '' }}">
+                    <a href="{{ route('warehouses.index') }}" class="nav-link">
+                        <i class="bi bi-building"></i>
+                        <span>Warehouses</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.index') }}" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Admin Panel</span>
+                     </a>
+                </li>
                 @endif
                 @if (Auth::user()->role === 'staff')
                     <li class="nav-item {{ request()->routeIs('defects.*') ? 'active' : '' }}">
                         <a href="{{ route('defects.index') }}" class="nav-link">
                             <i class="bi bi-ui-checks"></i>
                             <span>Quality Control</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('warehouses.*') ? 'active' : '' }}">
+                        <a href="{{ route('warehouses.index') }}" class="nav-link">
+                            <i class="bi bi-building"></i>
+                            <span>Warehouses</span>
                         </a>
                     </li>
                 @endif
