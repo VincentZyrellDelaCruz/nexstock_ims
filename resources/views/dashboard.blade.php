@@ -46,11 +46,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($topProducts ?? [] as $product)
+                        @forelse($topProducts ?? [] as $inventory)
                         <tr>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->quantity }}</td>
-                            <td><span class="badge bg-success">{{ $product->status }}</span></td>
+                            <td>{{ $inventory->product->name ?? 'N/A' }}</td>
+                            <td>{{ $inventory->quantity }}</td>
+                            <td><span class="badge bg-{{ $inventory->status === 'in_stock' ? 'success' : ($inventory->status === 'low_stock' ? 'warning' : 'danger') }}">{{ ucfirst(str_replace('_', ' ', $inventory->status)) }}</span></td>
                         </tr>
                         @empty
                         <tr>

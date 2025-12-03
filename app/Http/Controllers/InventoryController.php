@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
+use App\Models\Warehouse;
 
 class InventoryController extends Controller
 {
@@ -31,8 +32,13 @@ class InventoryController extends Controller
             'quantity' => 'required|integer|min:0',
         ]);
 
+        // Get the first (and only) warehouse
+        $warehouse = Warehouse::first();
+        $warehouseId = $warehouse ? $warehouse->id : null;
+
         Inventory::create([
             'product_id' => $request->product_id,
+            'warehouse_id' => $warehouseId,
             'quantity' => $request->quantity,
             'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
         ]);
@@ -55,8 +61,13 @@ class InventoryController extends Controller
             'quantity' => 'required|integer|min:0'
         ]);
 
+        // Get the first (and only) warehouse
+        $warehouse = Warehouse::first();
+        $warehouseId = $warehouse ? $warehouse->id : null;
+
         $inventory->update([
             'product_id' => $request->product_id,
+            'warehouse_id' => $warehouseId,
             'quantity' => $request->quantity,
             'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
         ]);

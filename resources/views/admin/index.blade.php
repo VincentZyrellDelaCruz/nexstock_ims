@@ -53,8 +53,8 @@
             </tbody>
         </table>
     </div>
-    <div class="card-body" id="pending-body">
-
+    <div class="card-body" id="pending-body" style="display: none;">
+        <p class="text-center">No pending messages.</p>
     </div>
 </div>
 
@@ -65,6 +65,18 @@
     const pendingBody = document.getElementById('pending-body');
     const cardHeader = document.querySelector('.card-header');
     const addUserBtn = document.getElementById('add-user-btn');
+    const card = document.querySelector('.card');
+
+    // Initialize: ensure pending-body is hidden on page load
+    pendingBody.style.display = 'none';
+    
+    // Store the initial card height when user-body is visible (after page loads)
+    let initialCardHeight = 0;
+    
+    // Wait for page to fully load before capturing initial height
+    window.addEventListener('load', () => {
+        initialCardHeight = card.offsetHeight;
+    });
 
     userBtn.addEventListener('click', () => {
         userBody.style.display = 'block';
@@ -73,6 +85,12 @@
         addUserBtn.style.display = 'inline-block';
         pendingBtn.classList.remove('active');
         userBtn.classList.add('active');
+        // Reset min-height to allow natural expansion
+        card.style.minHeight = 'auto';
+        // Update initial height for next switch
+        setTimeout(() => {
+            initialCardHeight = card.offsetHeight;
+        }, 100);
     });
 
     pendingBtn.addEventListener('click', () => {
@@ -82,6 +100,10 @@
         addUserBtn.style.display = 'none';
         userBtn.classList.remove('active');
         pendingBtn.classList.add('active');
+        // Maintain card height when switching to pending tab
+        if (initialCardHeight > 0) {
+            card.style.minHeight = initialCardHeight + 'px';
+        }
     });
 </script>
 @endsection

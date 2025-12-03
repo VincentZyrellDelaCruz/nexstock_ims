@@ -58,30 +58,29 @@
                         <span>Category</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}">
-                    <a href="{{ route('suppliers.index') }}" class="nav-link">
-                        <i class="bi bi-people"></i>
-                        <span>Suppliers</span>
-                    </a>
-                </li>
                 <li class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
                     <a href="{{ route('transactions.index') }}" class="nav-link">
                         <i class="bi bi-arrow-left-right"></i>
                         <span>Transactions</span>
                     </a>
                 </li>
-
-                @if (Auth::user()->role === 'admin')
-                <li class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                    <a href="{{ route('reports.index') }}" class="nav-link">
-                        <i class="bi bi-file-earmark-text"></i>
-                        <span>Reports</span>
+                <li class="nav-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}">
+                    <a href="{{ route('suppliers.index') }}" class="nav-link">
+                        <i class="bi bi-people"></i>
+                        <span>Suppliers</span>
                     </a>
                 </li>
+                @if (Auth::user()->role === 'admin')
                 <li class="nav-item {{ request()->routeIs('warehouses.*') ? 'active' : '' }}">
                     <a href="{{ route('warehouses.index') }}" class="nav-link">
                         <i class="bi bi-building"></i>
                         <span>Warehouses</span>
+                    </a>
+                </li>
+                <li class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                    <a href="{{ route('reports.index') }}" class="nav-link">
+                        <i class="bi bi-file-earmark-text"></i>
+                        <span>Reports</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
