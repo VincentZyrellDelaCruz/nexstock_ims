@@ -1,0 +1,24 @@
+/* Load Montserrat */
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap");
+
+html,
+body {
+    font-family: "Montserrat", sans-serif;
+}
+
+/* Apply drop shadow to common container-like elements */
+[class*="container"],
+.container,
+.container-fluid,
+[class*="card"],
+.card,
+[class*="panel"],
+.panel,
+section,
+.box,
+.panel-body,
+.card-body {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    border-radius: 8px;
+    background-clip: padding-box;
+}
