@@ -9,8 +9,6 @@ class Defect extends Model
 {
     use HasFactory;
 
-    // protected $table = 'defects';
-
     protected $fillable = [
         'product_id',
         'description',
@@ -26,5 +24,14 @@ class Defect extends Model
     {
         return $this->belongsTo(Product::class);
     }
-}
 
+    public function reporter()
+    {
+        return $this->belongsTo(User::class, 'reported_by');
+    }
+
+    public function reviewer()
+    {
+        return $this->belongsTo(User::class, 'reviewed_by');
+    }
+}

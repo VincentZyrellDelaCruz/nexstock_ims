@@ -9,56 +9,66 @@ use App\Models\Product;
 
 class QualityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $defects = Defect::with('product')->get();
+        $query = Defect::with(['product', 'reporter']);
+
+        if ($request->has('search') && $request->search !== null) {
+            $search = $request->search;
+
+            $query->whereHas('product', function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%");
+            });
+        }
+
+        $defects = $query->get();
+
         return view('quality.index', compact('defects'));
     }
 
     public function create()
     {
-        if (Auth::check() && Auth::user()->role === 'staff') {
+        if (Auth::check() && in_array(Auth::user()->role, ['staff', 'admin'])) {
             $products = Product::all();
             return view('quality.create', compact('products'));
         }
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('error', 'You are not authorized to create a defect report.');
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:0',
+            'quantity_affected' => 'required|integer|min:0',
+            'description' => 'required|string|max:255',
+            'proof_image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'reported_by' => 'required|exists:users,id'
         ]);
 
-        Defect::create([
+        $defect = Defect::create([
             'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
+            'quantity_affected' => $request->quantity_affected,
+            'description' => $request->description,
+            'reported_by' => $request->reported_by,
+            'status' => 'pending'
         ]);
-        return redirect()->route('quality.index')->with('success', 'defect item added successfully!');
+
+        if ($request->hasFile('proof_image')) {
+            $path = $request->file('proof_image')->store(
+                'defects',
+                'public'
+            );
+
+            $defect->update(['proof_image' => $path]);
+        }
+
+        return redirect()->route('defects.index')
+            ->with('success', 'Defect report submitted successfully!');
     }
 
-    public function update(Request $request, Defect $defect)
+    public function show(Defect $defect)
     {
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:0'
-        ]);
-
-        $defect->update([
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'status' => $request->quantity > 10 ? 'in_stock' : ($request->quantity > 0 ? 'low_stock' : 'out_of_stock'),
-        ]);
-
-        return redirect()->route('quality.index')->with('success', 'defect item updated successfully!');
+        $defect->load(['product', 'reporter']);
+        return view('quality.show', compact('defect'));
     }
-
-    /* public function destroy(Defect $defect)
-    {
-        $defect->delete();
-        return redirect()->route('defect.index')->with('success', 'Inventory item deleted successfully!');
-    } */
 }
-

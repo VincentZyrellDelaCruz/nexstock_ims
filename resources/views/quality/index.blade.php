@@ -13,10 +13,13 @@
 <div class="card">
     <div class="card-header">
         <h5>Defect Submissions</h5>
-        @include('components._table_search', ['placeholder' => 'Search products...'])
+
+        @include('quality.tablesearch', ['placeholder' => 'Search products...'])
     </div>
+
     <div class="card-body">
-        <table class="table">
+        <table class="table table-hover">
+
             <thead>
                 <tr>
                     <th>Report ID</th>
@@ -25,21 +28,35 @@
                     <th>Reported By</th>
                     <th>Status</th>
                     <th>Report Date</th>
-                    @if (Auth::check() && Auth::user()->role === 'admin') <th>Actions</th> @endif
                 </tr>
             </thead>
             <tbody>
+                @php
+                    $statusColors = [
+                        'pending' => 'secondary',
+                        'approved' => 'success',
+                        'rejected' => 'danger'
+                    ];
+                @endphp
+
                 @forelse($defects as $defect)
-                <tr>
+                <tr onclick="window.location='{{ route('defects.show', $defect->id) }}'" style="cursor:pointer;">
                     <td>{{ $defect->id }}</td>
                     <td>{{ $defect->product->name ?? 'N/A' }}</td>
                     <td>{{ $defect->quantity_affected }}</td>
-                    <td>{{ $defect->reported_by }}</td>
-                    <td><span class="badge bg-{{ $defect->status == 'pending' ? 'secondary' : 'success' }}">{{ ucfirst($defect->status) }}</span></td>
+                    <td>{{ $defect->reporter->name ?? 'N/A' }}</td>
+                    <td>
+                        <span class="badge bg-{{ $statusColors[$defect->status] ?? 'secondary' }}">
+                            {{ ucfirst($defect->status) }}
+                        </span>
+                    </td>
+
                     <td>{{ $defect->created_at->format('M d, Y') }}</td>
                 </tr>
                 @empty
                 <tr>
+                    <td colspan="6" class="text-center">No submission found.</td>
+
                     <td colspan="7" class="text-center">No submission found.</td>
                 </tr>
                 @endforelse
