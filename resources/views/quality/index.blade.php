@@ -13,11 +13,13 @@
 <div class="card">
     <div class="card-header">
         <h5>Defect Submissions</h5>
+
         @include('quality.tablesearch', ['placeholder' => 'Search products...'])
     </div>
 
     <div class="card-body">
         <table class="table table-hover">
+
             <thead>
                 <tr>
                     <th>Report ID</th>
@@ -48,11 +50,14 @@
                             {{ ucfirst($defect->status) }}
                         </span>
                     </td>
+
                     <td>{{ $defect->created_at->format('M d, Y') }}</td>
                 </tr>
                 @empty
                 <tr>
                     <td colspan="6" class="text-center">No submission found.</td>
+
+                    <td colspan="7" class="text-center">No submission found.</td>
                 </tr>
                 @endforelse
             </tbody>
@@ -60,3 +65,4 @@
     </div>
 </div>
 @endsection
+
