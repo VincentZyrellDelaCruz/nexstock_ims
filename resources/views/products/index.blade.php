@@ -24,10 +24,10 @@
                     <th>Product ID</th>
                     <th>Product Name</th>
                     <th>Category</th>
-                    <th>Quantity</th>
+                    <th>SKU</th>
                     <th>Price</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    @if (Auth::check() && Auth::user()->role === 'admin') <th>Actions</th> @endif
                 </tr>
             </thead>
             <tbody>
@@ -36,17 +36,19 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->category->name ?? 'N/A' }}</td>
-                    <td>{{ $product->quantity }}</td>
-                    <td>${{ number_format($product->price, 2) }}</td>
+                    <td>{{ $product->sku }}</td>
+                    <td>₱{{ number_format($product->price, 2) }}</td>
                     <td><span class="badge bg-{{ $product->status == 'active' ? 'success' : 'danger' }}">{{ ucfirst($product->status) }}</span></td>
-                    <td>
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">Edit</a>
-                        <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-                    </td>
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <td>
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">Edit</a>
+                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    @endif
                 </tr>
                 @empty
                 <tr>

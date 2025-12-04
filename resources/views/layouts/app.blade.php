@@ -6,10 +6,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'NexStack - Inventory Management System')</title>
 
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <!-- Custom CSS -->
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 
@@ -55,16 +58,23 @@
                         <span>Category</span>
                     </a>
                 </li>
+                <li class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
+                    <a href="{{ route('transactions.index') }}" class="nav-link">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <span>Transactions</span>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->routeIs('suppliers.*') ? 'active' : '' }}">
                     <a href="{{ route('suppliers.index') }}" class="nav-link">
                         <i class="bi bi-people"></i>
                         <span>Suppliers</span>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->routeIs('transactions.*') ? 'active' : '' }}">
-                    <a href="{{ route('transactions.index') }}" class="nav-link">
-                        <i class="bi bi-arrow-left-right"></i>
-                        <span>Transactions</span>
+                @if (Auth::user()->role === 'admin')
+                <li class="nav-item {{ request()->routeIs('warehouses.*') ? 'active' : '' }}">
+                    <a href="{{ route('warehouses.index') }}" class="nav-link">
+                        <i class="bi bi-building"></i>
+                        <span>Warehouses</span>
                     </a>
                 </li>
                 <li class="nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
@@ -73,11 +83,24 @@
                         <span>Reports</span>
                     </a>
                 </li>
-                @if (Auth::user()->role === 'admin')
-                    <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
-                        <a href="{{ route('admin.index') }}" class="nav-link">
-                            <i class="bi bi-gear"></i>
-                            <span>Admin Settings</span>
+                <li class="nav-item {{ request()->routeIs('admin.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.index') }}" class="nav-link">
+                        <i class="bi bi-gear"></i>
+                        <span>Admin Panel</span>
+                     </a>
+                </li>
+                @endif
+                @if (Auth::user()->role === 'staff')
+                    <li class="nav-item {{ request()->routeIs('defects.*') ? 'active' : '' }}">
+                        <a href="{{ route('defects.index') }}" class="nav-link">
+                            <i class="bi bi-ui-checks"></i>
+                            <span>Quality Control</span>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ request()->routeIs('warehouses.*') ? 'active' : '' }}">
+                        <a href="{{ route('warehouses.index') }}" class="nav-link">
+                            <i class="bi bi-building"></i>
+                            <span>Warehouses</span>
                         </a>
                     </li>
                 @endif

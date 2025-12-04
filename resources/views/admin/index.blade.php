@@ -1,23 +1,24 @@
 @extends('layouts.app')
 
-@section('title', 'Admin Settings - NexStack')
-@section('page-title', 'ADMIN SETTINGS')
+@section('title', 'Admin Panel - NexStack')
+@section('page-title', 'ADMIN PANEL')
 
 @section('content')
-@if (Auth::check() && Auth::user()->role === 'admin')
-    <div class="mb-3">
-        <a href="{{ route('admin.users.create') }}" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Add User
-        </a>
-    </div>
-@endif
+
+<div class="btn-group w-100 mb-3" role="group">
+    <button type="button" class="btn btn-success active"  id="user-btn">Users Management</button>
+    <button type="button" class="btn btn-success" id="pending-btn">Pending Messages</button>
+</div>
+
+<a href="{{ route('admin.users.create') }}" class="btn btn-success mb-3" id="add-user-btn">
+    <i class="bi bi-plus-circle"></i> Add User
+</a>
 
 <div class="card">
     <div class="card-header">
-        <h5>Users Management</h5>
         @include('components._table_search', ['placeholder' => 'Search users...'])
     </div>
-    <div class="card-body">
+    <div class="card-body" id="user-body">
         <table class="table">
             <thead>
                 <tr>
@@ -52,6 +53,58 @@
             </tbody>
         </table>
     </div>
+    <div class="card-body" id="pending-body" style="display: none;">
+        <p class="text-center">No pending messages.</p>
+    </div>
 </div>
+
+<script>
+    const userBtn = document.getElementById('user-btn');
+    const pendingBtn = document.getElementById('pending-btn');
+    const userBody = document.getElementById('user-body');
+    const pendingBody = document.getElementById('pending-body');
+    const cardHeader = document.querySelector('.card-header');
+    const addUserBtn = document.getElementById('add-user-btn');
+    const card = document.querySelector('.card');
+
+    // Initialize: ensure pending-body is hidden on page load
+    pendingBody.style.display = 'none';
+    
+    // Store the initial card height when user-body is visible (after page loads)
+    let initialCardHeight = 0;
+    
+    // Wait for page to fully load before capturing initial height
+    window.addEventListener('load', () => {
+        initialCardHeight = card.offsetHeight;
+    });
+
+    userBtn.addEventListener('click', () => {
+        userBody.style.display = 'block';
+        pendingBody.style.display = 'none';
+        cardHeader.style.display = 'block';
+        addUserBtn.style.display = 'inline-block';
+        pendingBtn.classList.remove('active');
+        userBtn.classList.add('active');
+        // Reset min-height to allow natural expansion
+        card.style.minHeight = 'auto';
+        // Update initial height for next switch
+        setTimeout(() => {
+            initialCardHeight = card.offsetHeight;
+        }, 100);
+    });
+
+    pendingBtn.addEventListener('click', () => {
+        userBody.style.display = 'none';
+        pendingBody.style.display = 'block';
+        cardHeader.style.display = 'none';
+        addUserBtn.style.display = 'none';
+        userBtn.classList.remove('active');
+        pendingBtn.classList.add('active');
+        // Maintain card height when switching to pending tab
+        if (initialCardHeight > 0) {
+            card.style.minHeight = initialCardHeight + 'px';
+        }
+    });
+</script>
 @endsection
 
