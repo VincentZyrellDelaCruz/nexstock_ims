@@ -6,9 +6,18 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Services\EmailNotificationService;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
+    protected $emailService;
+
+    public function __construct(EmailNotificationService $emailService)
+    {
+        $this->emailService = $emailService;
+    }
+
     public function index()
     {
         if (Auth::check() && Auth::user()->role === 'admin') {
@@ -34,14 +43,19 @@ class AdminController extends Controller
             'role' => 'required|string',
         ]);
 
-        User::create([
+        $password = $request->password ?: Str::random(12);
+
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => Hash::make($password),
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.index')->with('success', 'User created successfully!');
+        // Send welcome email
+        $this->emailService->sendWelcomeEmail($user, $password);
+
+        return redirect()->route('admin.index')->with('success', 'User created successfully and welcome email sent!');
     }
 
     public function edit(User $user)

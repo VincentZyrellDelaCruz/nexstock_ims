@@ -18,4 +18,19 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function inventory()
+    {
+        return $this->hasMany(Inventory::class);
+    }
+
+    public function defects()
+    {
+        return $this->hasMany(Defect::class);
+    }
+
+    public function restockConfirmations()
+    {
+        return $this->hasMany(RestockConfirmation::class);
+    }
 }

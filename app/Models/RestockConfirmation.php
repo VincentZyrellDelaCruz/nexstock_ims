@@ -5,21 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Defect extends Model
+class RestockConfirmation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'product_id',
-        'description',
-        'proof_image',
-        'quantity_affected',
-        'reported_by',
-        'status',
-        'action_taken',
-        'reviewed_by',
+        'warehouse_id',
+        'requested_quantity',
+        'reason',
+        'requested_by',
         'supplier_id',
+        'status',
+        'reviewed_by',
         'reviewed_at',
+        'admin_notes',
     ];
 
     protected $casts = [
@@ -31,9 +31,14 @@ class Defect extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function reporter()
+    public function warehouse()
     {
-        return $this->belongsTo(User::class, 'reported_by');
+        return $this->belongsTo(Warehouse::class);
+    }
+
+    public function requester()
+    {
+        return $this->belongsTo(User::class, 'requested_by');
     }
 
     public function reviewer()
@@ -48,6 +53,7 @@ class Defect extends Model
 
     public function pending()
     {
-        return $this->hasOne(Pending::class, 'reference_id')->where('type', 'defect');
+        return $this->hasOne(Pending::class, 'reference_id')->where('type', 'restock');
     }
 }
+
