@@ -31,10 +31,10 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'required|string|unique:products,sku|max:50',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
             'status' => 'required|string',
         ]);
 
@@ -55,10 +55,10 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'sku' => 'required|string|unique:products,sku|max:50',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
             'price' => 'required|numeric|min:0',
+            'quantity' => 'required|integer|min:0',
             'status' => 'required|string',
         ]);
 

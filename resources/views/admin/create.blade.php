@@ -12,7 +12,7 @@
         <form action="{{ route('admin.users.store') }}" method="POST">
             @csrf
             <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
+                <label for="name" class="form-label">Username / Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
             </div>
             <div class="mb-3">
@@ -26,7 +26,7 @@
             <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
                 <select class="form-select" id="role" name="role" required>
-                    <option value="staff" {{ old('role') == 'staff' ? 'selected' : '' }}>Staff</option>
+                    <option value="user" {{ old('role') == 'user' ? 'selected' : '' }}>User</option>
                     <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
                 </select>
             </div>

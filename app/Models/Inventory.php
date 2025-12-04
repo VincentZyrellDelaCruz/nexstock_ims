@@ -13,7 +13,6 @@ class Inventory extends Model
 
     protected $fillable = [
         'product_id',
-        'warehouse_id',
         'quantity',
         'status',
     ];
@@ -21,11 +20,6 @@ class Inventory extends Model
     public function product()
     {
         return $this->belongsTo(Product::class);
-    }
-
-    public function warehouse()
-    {
-        return $this->belongsTo(Warehouse::class);
     }
 }
 

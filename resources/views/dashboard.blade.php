@@ -14,22 +14,23 @@
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
             <p>Total Revenue</p>
-            <h3>₱{{ number_format($totalRevenue ?? 0, 2) }}</h3>
+            <h3>${{ number_format($totalRevenue ?? 0, 2) }}</h3>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
-            <p>Low Stock Items</p>
-            <h3>{{ $lowStockProducts ?? 0 }}</h3>
+            <p>New Orders</p>
+            <h3>{{ $newOrders ?? 0 }}</h3>
         </div>
     </div>
     <div class="col-md-3 mb-4">
         <div class="kpi-card">
-            <p>Out of Stock</p>
-            <h3>{{ $outOfStockProducts ?? 0 }}</h3>
+            <p>Pending Orders</p>
+            <h3>{{ $pendingOrders ?? 0 }}</h3>
         </div>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-6 mb-4">
         <div class="card">
@@ -37,6 +38,7 @@
                 <h5>Top Selling Products</h5>
             </div>
             <div class="card-body">
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -46,11 +48,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($topProducts ?? [] as $inventory)
+                        @forelse($topProducts ?? [] as $product)
                         <tr>
-                            <td>{{ $inventory->product->name ?? 'N/A' }}</td>
-                            <td>{{ $inventory->quantity }}</td>
-                            <td><span class="badge bg-{{ $inventory->status === 'in_stock' ? 'success' : ($inventory->status === 'low_stock' ? 'warning' : 'danger') }}">{{ ucfirst(str_replace('_', ' ', $inventory->status)) }}</span></td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->quantity }}</td>
+                            <td><span class="badge bg-success">{{ $product->status }}</span></td>
                         </tr>
                         @empty
                         <tr>
@@ -62,13 +64,13 @@
             </div>
         </div>
     </div>
-
     <div class="col-md-6 mb-4">
         <div class="card">
             <div class="card-header">
-                <h5>Recent Transactions</h5>
+                <h5>Recent Orders</h5>
             </div>
             <div class="card-body">
+                </div>
                 <table class="table">
                     <thead>
                         <tr>

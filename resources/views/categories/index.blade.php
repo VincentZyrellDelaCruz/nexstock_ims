@@ -24,7 +24,7 @@
                     <th>Category ID</th>
                     <th>Category Name</th>
                     <th>Description</th>
-                    @if (Auth::check() && Auth::user()->role === 'admin') <th>Actions</th> @endif
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
