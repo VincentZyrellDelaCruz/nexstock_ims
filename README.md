@@ -26,22 +26,22 @@ A comprehensive inventory management system built with Laravel, PHP, HTML, CSS, 
 ## Installation
 
 1. Clone the repository
-2. Install dependencies:
+2. Install dependencies: (Optional if no composer yet)
    ```bash
-   composer install
+   composer install 
    ```
 
-3. Copy the environment file:
+3. Copy the environment file: (Important)
    ```bash
    cp .env.example .env
    ```
 
-4. Generate application key:
+4. Generate application key: (Important)
    ```bash
    php artisan key:generate
    ```
 
-5. Configure your database in `.env` file:
+5. Configure your database in `.env` file: (Optional)
    ```
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
@@ -51,17 +51,29 @@ A comprehensive inventory management system built with Laravel, PHP, HTML, CSS, 
    DB_PASSWORD=your_password
    ```
 
-6. Run migrations:
+6. PDF Library Installation(Optional For now if not needed yet)
+   Install DomPDF package:
+   ```bash
+   composer require barryvdh/laravel-dompdf
+   ```
+
+7. Storage Configuration (Important)
+   Ensure storage link is created:
+   ```bash
+   php artisan storage:link
+   ```
+
+8. Run migrations: (Important)
    ```bash
    php artisan migrate
    ```
 
-7. Start the development server:
+9. Start the development server:
    ```bash
    php artisan serve
    ```
 
-8. Open your browser and navigate to `http://localhost:8000`
+10. Open your browser and navigate to `http://localhost:8000`
 
 ## Project Structure
 
